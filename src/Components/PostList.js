@@ -1,25 +1,39 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchPosts} from '../Actions';
+import {fetchPostsAndUsers} from '../Actions';
 import UserHeader from './UserHeader';
 
 class PostList extends Component {
 	componentDidMount() {
-		this.props.fetchPosts();
+		this.props.fetchPostsAndUsers();
 	}
 
 	renderList() {
 		return this.props.posts.map(post => {
 			return (
-				<div className="item" key={post.id}>
-					<i className="larger middles aligned icon user" />
-					<div className="content">
-						<div className="description">
-							<h2>{post.title}</h2>
-							<p>{post.body}</p>
+				<div className="ui segment" key={post.id}>
+					<div className="ui content">
+						<i className="larger middles aligned icon user" />
+						<div className="content">
+							<div className="description">
+								<h2>{post.title}</h2>
+								<UserHeader userId={post.userId} />
+								<p>{post.body}</p>
+							</div>
+							<div className="content">
+								<span class="right floated">
+									<i class="heart outline like icon" />
+									17 likes
+								</span>
+								<i class="comment icon" />3 comments
+							</div>
 						</div>
-                        <UserHeader 
-                        userId={post.userId}/>
+					</div>
+					<div class="extra content">
+						<div class="ui large transparent left icon input">
+							<i class="heart outline icon" />
+							<input type="text" placeholder="Add Comment..." />
+						</div>
 					</div>
 				</div>
 			);
@@ -39,5 +53,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{fetchPosts}
+	{fetchPostsAndUsers}
 )(PostList);
